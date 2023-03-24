@@ -76,15 +76,53 @@ let follow = async(result, userProfile, loginResult) => {
     };
 }
 
-let start = async() => {
-    let loginResult = await login(pk);
-    let userProfile =  await getUserProfiles(pk);
-    let result = await profile(userProfile, loginResult);
-    if(result.isFollowedByMe == true){
-        console.log(`已经关注: ${handle} 用户, 无法重复关注`);
-    }else{
-        await follow(result, userProfile, loginResult);
+// let start = async(pk1) => {
+//     let loginResult = await login(pk1);
+//     let userProfile =  await getUserProfiles(pk1);
+//     let result = await profile(userProfile, loginResult);
+//     if(result.isFollowedByMe == true){
+//         console.log(`已经关注: ${handle} 用户, 无法重复关注`);
+//     }else{
+//         await follow(result, userProfile, loginResult);
+//     }
+// }
+//
+// const pk_list = pk.split(",");
+// for (let i = 0; i < pk_list.length; i++) {
+//     start(pk_list[i]);
+// }
+
+async function start(pk, delay) {
+    try {
+        let loginResult = await login(pk);
+        await delayFn(delay); // 延迟执行
+        let userProfile = await getUserProfiles(pk);
+        await delayFn(delay); // 延迟执行
+        let result = await profile(userProfile, loginResult);
+        await delayFn(delay); // 延迟执行
+        if (result.isFollowedByMe == true) {
+            console.log(`${new Date().toISOString()} 已经关注: ${handle} 用户, 无法重复关注`);
+        } else {
+            await follow(result, userProfile, loginResult);
+        }
+    } catch (error) {
+        console.error(`task failed: ${error}`);
     }
 }
 
-start()
+function delayFn(delay) {
+    return new Promise((resolve) => setTimeout(resolve, delay + Math.floor(Math.random() * 5 ) * 900));
+}
+
+
+
+const pk_list = pk.split(",");
+for (let i = 0; i < pk_list.length; i++) {
+    const delay = Math.floor(Math.random() * 10 + 1) * 1000; // 生成1-10的随机数
+    start(pk_list[i], delay)
+        .then(() => console.log(`${new Date().toISOString()} task ${i+1} completed`))
+        .catch(error => console.error(`${new Date().toISOString()} task ${i+1} failed: ${error}`));
+}
+
+
+

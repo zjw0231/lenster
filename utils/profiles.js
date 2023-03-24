@@ -23,11 +23,11 @@ let userProfiles = async(address, accessToken) => {
     try{
         let res = await axios.post(url, payload, config);
         return {
-            "id": res.data.data.profiles.items[1].id,
-            "name": res.data.data.profiles.items[1].name,
-            "handle": res.data.data.profiles.items[1].handle,
-            "totalFollowers": res.data.data.profiles.items[1].stats.totalFollowers,
-            "totalFollowing": res.data.data.profiles.items[1].stats.totalFollowing,
+            "id": res.data.data.profiles.items[0].id,
+            "name": res.data.data.profiles.items[0].name,
+            "handle": res.data.data.profiles.items[0].handle,
+            "totalFollowers": res.data.data.profiles.items[0].stats.totalFollowers,
+            "totalFollowing": res.data.data.profiles.items[0].stats.totalFollowing,
         }
     }catch(err){
         console.log(`${address}---获取个人信息失败: ${err}`);
