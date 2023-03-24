@@ -1,4 +1,5 @@
-# lens全自动发帖|点赞|关注|脚本 升级版(Robot群友专用) Fork from https://github.com/skyMetaverse/lenster
+# lens全自动发帖|点赞|关注|脚本 升级版(Robot群友专用) 
+## Fork from https://github.com/skyMetaverse/lenster
 
 ## 功能说明
 相比原版脚本，修复了一些bug，然后新增以下功能
@@ -19,5 +20,12 @@ npm run follow       # 关注用户
 npm run like         # 点赞帖子
 npm run post         # 发动态
 ```
+
+## 自定义随机语料使用说明
+修改 post.js里的第10行，把你自己的语料库替换进去
+```
+let cont_list = ["GM", "今天天气不错"]
+```
+建议： 语料库可以自己去推特抓取，或者使用ai生产
 
 ## 如果觉得有帮助，欢迎加入Robot Dao一起探讨(吹水) : https://opensea.io/collection/cryptochasers-robot
